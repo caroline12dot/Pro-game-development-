@@ -75,6 +75,11 @@ def bullets(blkbullets,redbullets,black,red):
         elif i.x<0:
             redbullets.remove(i)
     
+def winner(text):
+    t=font.render(text,1,white)
+    screen.blit(t,(w/2-t.get_width()/2,h/2-t.get_height()/2))
+    pygame.display.update()
+    pygame.time.delay(5000)
 
 red=pygame.Rect(700,300,ssw,ssh)
 black=pygame.Rect(100,300,ssw,ssh)
@@ -93,11 +98,29 @@ while run:
             if i.key==pygame.K_SPACE and len(blkbullets)<maxbullets:
                 bullet=pygame.Rect(black.x+black.width,black.y+black.height//2-2,10,5)
                 blkbullets.append(bullet)
+                firesound.play()
             if i.key==pygame.K_LSHIFT and len(redbullets)<maxbullets:
                 bullet=pygame.Rect(red.x,red.y+red.height//2-2,10,5)
                 redbullets.append(bullet)
+                firesound.play()
+        if i.type==redhit:
+            redhealth-=1
+            hitsound.play()
+        if i.type==blackhit:
+            blkhealth-=1
+            hitsound.play()
+    winnertext=""
+    
+    if redhealth<=0:
+        winnertext="Yellow wins"
+    if blkhealth<=0:
+        winnertext="Red wins"
+    if winnertext !="":
+        winner(winnertext)
+        break
     draw(red,black,redbullets,blkbullets,redhealth,blkhealth)
     keys_pressed=pygame.key.get_pressed()
     blkmovement(keys_pressed,black)
     redmovement(keys_pressed,red)
     bullets(blkbullets,redbullets,black,red)
+
