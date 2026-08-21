@@ -38,4 +38,37 @@ for i in range(40):
     item.rect.y=random.randrange(900)
     itemlist.add(item)
     allsprites.add(item)
-    
+for i in range(20):
+    item=Nonrecycle()
+    item.rect.x=random.randrange(900)
+    item.rect.y=random.randrange(900)
+    plasticlist.add(item)
+    allsprites.add(item)
+bin=Bin()
+allsprites.add(bin)
+score=0
+clock=pygame.time.Clock()
+starttime=time.time()
+font=pygame.font.SysFont("Calibri",25)
+text=font.render("score: "+str(score),True,"White")
+while True:
+    clock.tick(30)
+    for i in pygame.event.get():
+        if i.type==pygame.QUIT:
+            pygame.quit()
+    timeelapsed=time.time()-starttime
+    if timeelapsed>=60:
+        if score>25:
+            text=font.render("Well Done",True,"Red")
+            changebg("win.jpg")
+        else:
+            text=font.render("Well Tried",True,"Red")
+            changebg("lose.jpg")
+        screen.blit(text,(300,40))
+
+    else:
+        changebg("bground.png")
+        countdown=font.render("timeleft: "+str(60-int(timeelapsed)),True,"White")
+        screen.blit(countdown,(20,10))
+        allsprites.draw(screen)
+    pygame.display.update()
