@@ -70,5 +70,27 @@ while True:
         changebg("bground.png")
         countdown=font.render("timeleft: "+str(60-int(timeelapsed)),True,"White")
         screen.blit(countdown,(20,10))
+        keys=pygame.key.get_pressed()
+        if keys [pygame.K_w]:
+            if bin.rect.y>0:
+                bin.rect.y-=5
+        if keys [pygame.K_s]:
+            if bin.rect.y<830:
+                bin.rect.y+=5
+        if keys [pygame.K_a]:
+            if bin.rect.x>0:
+                bin.rect.x-=5
+        if keys [pygame.K_d]:
+            if bin.rect.x<830:
+                bin.rect.x+=5
+        itemhit=pygame.sprite.spritecollide(bin,itemlist,True)
+        plastichit=pygame.sprite.spritecollide(bin,plasticlist,True)
+        for i in itemhit:
+            score+=5
+            text=font.render("score="+str(score),True,"Red")
+        for i in plastichit:
+            score-=5
+            text=font.render("score="+str(score),True,"Red")
+        screen.blit(text,(20,50))
         allsprites.draw(screen)
     pygame.display.update()
